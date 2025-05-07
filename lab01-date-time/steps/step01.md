@@ -57,7 +57,7 @@ INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T17
 SELECT * FROM entry;
 ```{{exec}}
 
-Next, you will use a `WHERE` with a range to select all the entries on April 3, 2025.
+Next, you will use a `WHERE` clause with a range to select all the entries on April 3, 2025.
 
 ✅ Select all entries from April 3
 ```
