@@ -23,7 +23,8 @@ use access;
 ```{{exec}}
 
 Next you will create a table.
-The table will contain country names and the continents there they are located.
+The table will entries into a facility by door.
+Since we are concerned abou time, the first clustering column is a timestamp and the second is the employee name.
 
 ✅ Create the table
 ```
@@ -35,7 +36,7 @@ CREATE TABLE entry (
 );
 ```{{exec}}
 
-✅ Insert data
+✅ Insert some entry data
 ```
 INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T08:12:00', 'Rosario');
 INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T17:44:00', 'Rosario');
@@ -56,26 +57,27 @@ INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T17
 SELECT * FROM entry;
 ```{{exec}}
 
-Next, you will use a `WHERE` clause to select all the countries in Europe.
+Next, you will use a `WHERE` with a range to select all the entries on April 3, 2025.
 
-✅ Select all countries
+✅ Select all entries from April 3
 ```
 SELECT employee_name, entry_time
 FROM entry
 WHERE door_id = 4
-  AND entry_time >= '2025-04-03 00:00:00'
-  AND entry_time <  '2025-04-04 00:00:00';
+  AND entry_time >= '2025-04-03 00:00:00-0500'
+  AND entry_time <  '2025-04-04 00:00:00-0500';
 ```{{exec}}
 
-✅ Select all countries
+You should see that Rosario, Lee and Tal all entered on April 3, and Lee entered twice.
+
+✅ Select the last entry on April 2
 ```
 SELECT employee_name, entry_time
 FROM entry
 WHERE door_id = 4
-  AND entry_time <  '2025-04-04 00:00:00' 
-  ORDER BY entry_time descending LIMIT 1;
+  AND entry_time >= '2025-04-02 00:00:00-0500'
+  AND entry_time <  '2025-04-03 00:00:00-0500'  
+  ORDER BY entry_time DESC LIMIT 1;
 ```{{exec}}
 
-You should see that this query fails!
-The data is in the table but you can't use `continent` in a `WHERE` clause.
-You will learn more about this in a later module.
+You should see that Tal was the last one to enter the facility on April 3 at 17:10:00.
