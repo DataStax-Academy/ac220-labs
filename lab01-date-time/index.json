@@ -1,0 +1,34 @@
+{
+    "private": false,
+    "title": "AC220 Lab 01: Date and Time",
+    "description": "Use CQL's date and time types",
+    "difficulty": "Beginner",
+    "time": "5 minutes",
+    "details": {
+      "assets": {
+        "host01": [
+            {"file": "wait.sh", "target": "/usr/local/bin", "chmod": "+x"}
+        ]
+      },
+      "steps": [
+        {
+          "title": "Step 1: Configure the environment",
+          "text": "steps/step01.md"
+        }
+      ],
+      "intro": {
+        "foreground": "scripts/intro-foreground.sh",
+        "background": "scripts/intro-background.sh",
+        "text": "steps/intro.md"
+      },
+      "finish": {
+        "text": "steps/finish.md"
+      }
+    },
+    "environment": {
+      "uilayout": "terminal"
+    },
+    "backend": {
+      "imageid": "ubuntu"
+    }
+  }
