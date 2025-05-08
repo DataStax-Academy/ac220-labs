@@ -1,5 +1,6 @@
 In this step, you will use `cqlsh` to create a keyspace and a table.
-The table will track entries to a facilty by door, time and employye.
+The table will track user interactions on a web site.
+You will use a TimeUUID to track time and ensure uniqueness.
 Then, you will populate the table and perform some time related queris.
 
 ✅ Use `cqlsh` to connect to Cassandra
@@ -11,7 +12,7 @@ You will need to create a keyspace for this lab.
 
 ✅ Use `cqlsh` to create a keyspace
 ```
-CREATE KEYSPACE access WITH replication = {
+CREATE KEYSPACE website WITH replication = {
   'class':'NetworkTopologyStrategy',
   'datacenter1':1
 };
@@ -19,42 +20,58 @@ CREATE KEYSPACE access WITH replication = {
 
 ✅ Use the keyspace you created
 ```
-use access;
+use website;
 ```{{exec}}
 
 Next you will create a table.
-The table will entries into a facility by door.
-Since we are concerned abou time, the first clustering column is a timestamp and the second is the employee name.
+The table will track user interaction with a website. 
+Since you are tracking data by user, `user_id` is the partition key.
+This table uses a 'timeuud' as the clustering column.
+The 'timeuuid' records the event time, and ensures uniqueness of the primary key.
+The 'CLUSTERING ORDER' is 'DESC' so most recent events can be retrieved first.
 
 ✅ Create the table
 ```
-CREATE TABLE entry (
-  door_id int,
-  entry_time timestamp,
-  employee_name text,
-  PRIMARY KEY ((door_id), entry_time, employee_name)
-);
+CREATE TABLE events_by_user (
+  user_id text,
+  event_time timeuuid,
+  event_type text,
+  description text,
+  PRIMARY KEY ((user_id), event_time)
+) WITH CLUSTERING ORDER BY (event_time DESC);
 ```{{exec}}
+
+Production applications should use the `now()` function for `timeuuid` generation. 
+For this example, you will use some pre-generated `timeuuid`s.
+The first three events happen on March 3, 2025, and the second three events happen on April 4, 2025.
 
 ✅ Insert some entry data
 ```
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T08:12:00', 'Rosario');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T17:44:00', 'Rosario');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-02T08:19:00', 'Rosario');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T07:55:00', 'Rosario');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T09:05:00', 'Tal');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-02T12:30:00', 'Tal');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-02T17:10:00', 'Tal');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T09:22:00', 'Tal');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T07:50:00', 'Lee');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-01T16:00:00', 'Lee');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T08:45:00', 'Lee');
-INSERT INTO entry (door_id, entry_time, employee_name) VALUES (4, '2025-04-03T17:35:00', 'Lee');
+--- March 3, 2025
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', ef620000-038b-11f0-8080-808080808080, 'login', 'Mahan logged in');
+
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', 13254600-038c-11f0-8080-808080808080, 'click', 'Clicked on homepage banner');
+
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', 36e88c00-038c-11f0-8080-808080808080, 'logout', 'Mahan logged out');
+
+--- April 4, 2025
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', 6b944000-0f55-11f0-8080-808080808080, 'login', 'Mahan logged in again');
+
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', 8f578600-0f55-11f0-8080-808080808080, 'click', 'Clicked on account page');
+
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', b31acc00-0f55-11f0-8080-808080808080, 'logout', 'Mahan logged out again');
+
 ```{{exec}}
 
 ✅ Select all data
 ```
-SELECT * FROM entry;
+SELECT * FROM events_by_user;
 ```{{exec}}
 
 Next, you will use a `WHERE` clause with a range to select all the entries on April 3, 2025.
