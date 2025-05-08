@@ -1,7 +1,7 @@
 {
     "private": false,
-    "title": "AC220 Lab 01: Date and Time",
-    "description": "Use CQL's date and time types",
+    "title": "AC220 Lab 02: Uniqueness",
+    "description": "Use CQL's TimeUUID types to ensure uniqueness and order in your data.",
     "difficulty": "Beginner",
     "time": "5 minutes",
     "details": {
@@ -12,6 +12,7 @@
       },
       "steps": [
         {
+          "title": "Step 1: Configure the environment",
           "text": "steps/step01.md"
         }
       ],
