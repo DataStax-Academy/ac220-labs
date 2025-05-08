@@ -20,7 +20,7 @@ CREATE KEYSPACE website WITH replication = {
 
 ✅ Use the keyspace you created
 ```
-use website;
+USE website;
 ```{{exec}}
 
 Next you will create a table.
@@ -47,54 +47,63 @@ The first three events happen on March 3, 2025, and the second three events happ
 
 ✅ Insert some entry data
 ```
---- March 3, 2025
+-- March 18, 2025
 INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', ef620000-038b-11f0-8080-808080808080, 'login', 'Mahan logged in');
+VALUES ('mahan', 824b7a80-041e-11f0-95ed-d98d7c0ecdb9, 'login', 'Mahan logged in');
 
 INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', 13254600-038c-11f0-8080-808080808080, 'click', 'Clicked on homepage banner');
+VALUES ('mahan', a6a75700-041e-11f0-8ef0-b18dcbf8d28d, 'click', 'Clicked on homepage banner');
 
 INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', 36e88c00-038c-11f0-8080-808080808080, 'logout', 'Mahan logged out');
+VALUES ('mahan', ef5f1000-041e-11f0-ae2f-14e03761abc6, 'logout', 'Mahan logged out');
 
---- April 4, 2025
+--- April 21, 2025
 INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', 6b944000-0f55-11f0-8080-808080808080, 'login', 'Mahan logged in again');
-
-INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', 8f578600-0f55-11f0-8080-808080808080, 'click', 'Clicked on account page');
+VALUES ('mahan', 42e5d300-1e8f-11f0-804b-65ec2fe5723b, 'login', 'Mahan logged in');
 
 INSERT INTO events_by_user (user_id, event_time, event_type, description)
-VALUES ('mahan', b31acc00-0f55-11f0-8080-808080808080, 'logout', 'Mahan logged out again');
+VALUES ('mahan', 6446bf00-1e8f-11f0-87dd-ff02348e7363, 'click', 'Clicked on account page');
+
+INSERT INTO events_by_user (user_id, event_time, event_type, description)
+VALUES ('mahan', b556b300-1e8f-11f0-a2ef-5cd9499f9b37, 'logout', 'Mahan logged out');
 
 ```{{exec}}
 
-✅ Select all data
+Take a look at the data noting the times the events occurred.
+
+✅ Select all the data extracting `timestamp`s from the `timeuuid`s.
 ```
-SELECT * FROM events_by_user;
+SELECT user_id, toTimeStamp(event_time), description, event_type FROM events_by_user;
 ```{{exec}}
 
-Next, you will use a `WHERE` clause with a range to select all the entries on April 3, 2025.
+Next, you are going to select Mahan's first event from March 18.
+In your query, you will need to narrow the partition to `mahan`.
+You will also need to limit the query to March 18.
+Since the partitions are in descending order by `event_time`, you will need to specify 'ASC' for the results to get the earliest event.
 
-✅ Select all entries from April 3
+✅ Select Mahan's first event from March 18
 ```
-SELECT employee_name, entry_time
-FROM entry
-WHERE door_id = 4
-  AND entry_time >= '2025-04-03 00:00:00-0500'
-  AND entry_time <  '2025-04-04 00:00:00-0500';
+SELECT user_id, toTimeStamp(event_time), description, event_type 
+  FROM events_by_user 
+  WHERE user_id = 'mahan' 
+    AND event_time >= minTimeUUID('2025-03-18') 
+    AND event_time < minTimeUUID('2025-03-19') 
+      ORDER BY event_time ASC LIMIT 1;
 ```{{exec}}
 
-You should see that Rosario, Lee and Tal all entered on April 3, and Lee entered twice.
+You should see that Mahan logged in on March 18 at 17:29:13.
 
-✅ Select the last entry on April 2
+Finally, look up Mahan's last event from March 18.
+Since the partition is already in descending order by `event_time` you do not need to change the order in your query.
+
+✅ Select Mahan's last event from March 18
 ```
-SELECT employee_name, entry_time
-FROM entry
-WHERE door_id = 4
-  AND entry_time >= '2025-04-02 00:00:00-0500'
-  AND entry_time <  '2025-04-03 00:00:00-0500'  
-  ORDER BY entry_time DESC LIMIT 1;
+SELECT user_id, toTimeStamp(event_time), description, event_type 
+  FROM events_by_user 
+  WHERE user_id = 'mahan' 
+    AND event_time >= minTimeUUID('2025-03-18') 
+    AND event_time < minTimeUUID('2025-03-19')
+      LIMIT 1;
 ```{{exec}}
 
-You should see that Tal was the last one to enter the facility on April 3 at 17:10:00.
+You should see that Mahan logged out at 17:32:16.
