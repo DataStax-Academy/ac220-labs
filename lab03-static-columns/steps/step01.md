@@ -70,6 +70,6 @@ Verify that the data has loaded.
 
 ✅ Select all the data
 ```
-SELECT * from Orders;
+SELECT * from orders;
 ```{{exec}}
 
