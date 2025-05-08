@@ -21,7 +21,7 @@ Try the update again with the clustering column.
 
 ✅ Change the status
 ```
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 2100;
+UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1410;
 ```{{exec}}
 
 Look at the results. 
@@ -31,7 +31,22 @@ Look at the results.
 SELECT * FROM orders;
 ```{{exec}}
 
-
+![GOLD](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/gold.jpg)
 
 The status is now `GOLD` but only for order `2100`.
 
+You will need to set the `status` to `GOLD` for each row.
+
+✅ Change the status for the remaining rows.
+```
+UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
+UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
+```{{exec}}
+
+✅ View the data
+```
+SELECT * FROM orders;
+```{{exec}}
+
+All of the orders for LumaCore show `GOLD` status. 
+But we had to update each row make the change.
