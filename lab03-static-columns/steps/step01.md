@@ -18,12 +18,12 @@ CREATE KEYSPACE sales WITH replication = {
 
 ✅ Use the keyspace you created
 ```
-USE sales
+USE sales;
 ```{{exec}}
 
 Next, you will create a table.
 The table will track customers, order numbers, order amounts and cutomer status.
-Every customer has a status value, either *active*, *inactive*, or *other*,
+Every customer has a status value, either *GOLD*, or *BASIC*,
 
 **Note:** The `amount` column represents the value of the order in cents as an 'int'. 
 Use `int` for currency to prevent potential errors in decimal math and provide consistency with client systems.
@@ -46,23 +46,23 @@ Insert some data for two customers.
 ```
 -- LumaCore
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('LumaCore', 1410, 1021200, 'active');
+  VALUES ('LumaCore', 1410, 1021200, 'BASIC');
 
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('LumaCore', 1411, 987100, 'active');
+  VALUES ('LumaCore', 1411, 987100, 'BASIC');
 
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('LumaCore', 1412, 509200, 'active');
+  VALUES ('LumaCore', 1412, 509200, 'BASIC');
 
 --- Nexora
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('Nexora', 2100, 12023100, 'active');
+  VALUES ('Nexora', 2100, 12023100, 'GOLD');
 
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('Nexora', 2101, 9023300, 'active');
+  VALUES ('Nexora', 2101, 9023300, 'GOLD');
 
 INSERT INTO orders (customer, order_id, amount, status)
-  VALUES ('Nexora', 2102, 1000000, 'active');
+  VALUES ('Nexora', 2102, 1000000, 'GOLD');
 
 ```{{exec}}
 
