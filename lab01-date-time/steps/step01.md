@@ -23,7 +23,7 @@ use access;
 ```{{exec}}
 
 Next you will create a table.
-The table will entries into a facility by door.
+The table will track entries into a facility by door.
 Since we are concerned abou time, the first clustering column is a timestamp and the second is the employee name.
 
 ✅ Create the table

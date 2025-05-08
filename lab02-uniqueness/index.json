@@ -12,7 +12,6 @@
       },
       "steps": [
         {
-          "title": "Step 1: Configure the environment",
           "text": "steps/step01.md"
         }
       ],
