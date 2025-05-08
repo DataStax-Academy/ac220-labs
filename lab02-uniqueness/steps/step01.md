@@ -1,6 +1,6 @@
 In this step, you will use `cqlsh` to create a keyspace and a table.
 The table will track user interactions on a web site.
-You will use a TimeUUID to track time and ensure uniqueness.
+You will use a `timeuuid` to track time and ensure uniqueness.
 Then, you will populate the table and perform some time related queris.
 
 ✅ Use `cqlsh` to connect to Cassandra
@@ -26,9 +26,9 @@ USE website;
 Next you will create a table.
 The table will track user interaction with a website. 
 Since you are tracking data by user, `user_id` is the partition key.
-This table uses a 'timeuud' as the clustering column.
-The 'timeuuid' records the event time, and ensures uniqueness of the primary key.
-The 'CLUSTERING ORDER' is 'DESC' so most recent events can be retrieved first.
+This table uses a `timeuud` as the clustering column.
+The `timeuuid records` the event time, and ensures uniqueness of the primary key.
+The `CLUSTERING ORDER` is `DESC` so most recent events can be retrieved first.
 
 ✅ Create the table
 ```
@@ -43,7 +43,7 @@ CREATE TABLE events_by_user (
 
 Production applications should use the `now()` function for `timeuuid` generation. 
 For this example, you will use some pre-generated `timeuuid`s.
-The first three events happen on March 3, 2025, and the second three events happen on April 4, 2025.
+The first three events happen on March 18, 2025, and the second three events happen on April 21, 2025.
 
 ✅ Insert some entry data
 ```
@@ -79,7 +79,7 @@ SELECT user_id, toTimeStamp(event_time), description, event_type FROM events_by_
 Next, you are going to select Mahan's first event from March 18.
 In your query, you will need to narrow the partition to `mahan`.
 You will also need to limit the query to March 18.
-Since the partitions are in descending order by `event_time`, you will need to specify 'ASC' for the results to get the earliest event.
+Since the partitions are in descending order by `event_time`, you will need to specify `ASC` for the results to get the earliest event.
 
 ✅ Select Mahan's first event from March 18
 ```
