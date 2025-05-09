@@ -1,8 +1,7 @@
-In this step, you will take a look at how Cassandra stores static data.
-You will use `nodetool` to flush data from the memtable to disk.
-Once the data has been written to disk you will use `sstabledump` to see haw the data is stored.
+In this step, you will use `nodetool` to flush data from the memtable to disk.
+Once the data has been written to disk you will use `sstabledump` to display the SSTable filein JSON format.
 
-Exit `cqlsh` do you can use command-line tools in a Linux shell.
+Exit `cqlsh` so you can use command-line tools in a Linux shell.
 
 ✅ Exit `cqlsh`
 ```
@@ -14,7 +13,6 @@ Use `nodetool` to cause Cassandra to flush data from the memtable and write it t
 ✅ Flush the memtables
 ```
 nodeA/bin/nodetool flush
-
 ```{{exec}}
 
 
@@ -31,7 +29,7 @@ Since there is no way of knowing the UUID values in advance, when you run `sstab
 
 ✅ Use `sstabledump` to view the SSTable file
 ```
-./sstabledump \
+~/nodeA/tools/bin/sstabledump \
   "$(find ~/nodeA/data/data/sales/orders-* \
   -type d -name snapshots -prune -o \
   -type f -name nb-1-big-Data.db -print)"
