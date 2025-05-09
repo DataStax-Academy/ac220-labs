@@ -8,4 +8,4 @@ Remember the table definition:
   amount int,
   status text static,
   PRIMARY KEY ((customer), order_id)
-);```
+);```{{}}
