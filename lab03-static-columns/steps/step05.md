@@ -12,4 +12,23 @@ CREATE TABLE orders (
 );
 ```
 
-ouh9igyef9ig
+This table has a compound primary key.
+The partition key is the `customer` column, and the clustering column is `order_id`.
+The `status` column is static, the only *ordinary* column is `amount`.
+
+Look at the JSON output.
+You should see two `partiton` entries. one for *LumaCore* and one for *Nexora*.
+
+```
+"partition" : {
+  "key" : [ "LumaCore" ],
+  "position" : 0
+},
+```
+
+```
+"partition" : {
+  "key" : [ "Nexora" ],
+  "position" : 0
+},
+```
