@@ -18,6 +18,8 @@ The `status` column is static, the only *ordinary* column is `amount`.
 
 Look at the JSON output.
 You should see two `partiton` entries. one for *LumaCore* and one for *Nexora*.
+Take look at the *LumaCore* parition.
+You see that he `key` is `LumaCore`.
 
 ```
 "partition" : {
@@ -26,9 +28,18 @@ You should see two `partiton` entries. one for *LumaCore* and one for *Nexora*.
 },
 ```
 
+Next there s a JSON array called `rows`.
+The first element isn't really a row, it's a `static_block`.
+This data is shared by all the rows in the partition.
+There is only one static cell (column) in the `cells` array.
+This is the `status` column and its value is `GOLD`.
+
 ```
-"partition" : {
-  "key" : [ "Nexora" ],
-  "position" : 0
-},
+{
+  "type" : "static_block",
+  "position" : 36,
+  "cells" : [
+    {"name" : "status", "value" : "GOLD"}
+  ]
+}
 ```
