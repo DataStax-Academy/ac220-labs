@@ -65,8 +65,6 @@ Look at the results.
 SELECT * FROM orders;
 ```{{exec}}
 
-![All GOLD](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/all-gold.jpg
-
-)
+![All GOLD](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/all-gold.jpg)
 
 All the rows for LumaCore show `GOLD` status.
