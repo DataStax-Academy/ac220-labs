@@ -16,6 +16,9 @@ This table has a compound primary key.
 The partition key is the `customer` column, and the clustering column is `order_id`.
 The `status` column is static, the only *ordinary* column is `amount`.
 
+These are the rows in the `LumaCore` partition.
+![LumaCore](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/lumacore.jpg)
+
 Look at the JSON output.
 You should see two `partiton` entries. one for *LumaCore* and one for *Nexora*.
 Take look at the *LumaCore* parition.
@@ -43,3 +46,4 @@ This is the `status` column and its value is `GOLD`.
   ]
 }
 ```
+
