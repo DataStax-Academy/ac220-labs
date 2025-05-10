@@ -31,7 +31,7 @@ You see that he `key` is `LumaCore`.
 },
 ```
 
-Next there s a JSON array called `rows`.
+Next there is a JSON array called `rows`.
 The first element isn't really a row, it's a `static_block`.
 This data is shared by all the rows in the partition.
 There is only one static cell (column) in the `cells` array.
@@ -47,3 +47,40 @@ This is the `status` column and its value is `GOLD`.
 }
 ```
 
+The rest of the `rows` array consists of three elements, on for each row in the partition.
+Each `row` has a `clustering` array.
+In this table the array has only one member, because the table only has one clustering column: `order_id`.
+
+Each `row` also has a `cells` array.
+This is for (non-static) columns that are not part of the primary key.
+This table only has one such column: `amount`.
+
+```
+{
+  "type" : "row",
+  "position" : 36,
+  "clustering" : [ 1410 ],
+  "liveness_info" : { "tstamp" : "2025-05-10T04:50:42.604005Z" },
+  "cells" : [
+    { "name" : "amount", "value" : 1021200 }
+  ]
+},
+{
+  "type" : "row",
+  "position" : 50,
+  "clustering" : [ 1411 ],
+  "liveness_info" : { "tstamp" : "2025-05-10T04:50:42.616385Z" },
+  "cells" : [
+    { "name" : "amount", "value" : 987100 }
+  ]
+},
+{
+  "type" : "row",
+  "position" : 65,
+  "clustering" : [ 1412 ],
+  "liveness_info" : { "tstamp" : "2025-05-10T04:50:42.626721Z" },
+  "cells" : [
+    { "name" : "amount", "value" : 509200 }
+  ]
+}
+```

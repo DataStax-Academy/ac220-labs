@@ -55,7 +55,8 @@ Since `status` column is `static`, you only need to specify the partition key (`
 
 ✅ Change the status
 ```
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore';
+UPDATE orders SET status = 'GOLD' 
+  WHERE customer = 'LumaCore';
 ```{{exec}}
 
 Look at the results. 
