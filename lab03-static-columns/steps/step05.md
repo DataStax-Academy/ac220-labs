@@ -84,3 +84,5 @@ This table only has one such column: `amount`.
   ]
 }
 ```
+
+You have now seen that static columns are stored once for each partition and shared by all the rows in the partition.
