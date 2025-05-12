@@ -38,4 +38,4 @@ You should see the `Tire rotation` and the `Oil change`.
 
 **Note:** The entries will not beordered by *month*.
 They will be ordered by alphabetically by *key value*.
-Cassandra knows your keys are `text` but does not now how to interpret them.  
+Cassandra knows that your keys are stored as `text` but it does not know how to interpret their meaning.  
