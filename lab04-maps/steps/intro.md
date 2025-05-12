@@ -1,8 +1,7 @@
 In this hands-on lab, you will:
 
-- Create a table and insert some data
-- Use `SSTableDump` to examine how data is stored in partitions, rows and columns
-- Create another table with a static column
-- Use `SSTableDump` to see how statis data is stored
+- Create a table and with a map and insert some data
+- Initially, the map will be null
+- Finally, you will add, delete, and update map data
 
 ❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
