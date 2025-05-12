@@ -39,7 +39,7 @@ CREATE TABLE customers (
   year int,
   color text,
   service_history map<text,text>,
-  PRIMARY KEY ((customer), vin)
+  PRIMARY KEY ((email), vin)
 );
 ```{{exec}}
 
