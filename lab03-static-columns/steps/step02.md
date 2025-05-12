@@ -40,7 +40,7 @@ You will need to set the `status` to `GOLD` for each row.
 ✅ Change the status for the remaining rows.
 ```
 UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
+UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1412;
 ```{{exec}}
 
 ✅ View the data
