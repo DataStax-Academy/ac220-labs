@@ -1,52 +1,41 @@
-In this step you will update the status for LumaCore.
-You will also use `SSTableDump` to see what happens when you make updates.
+In this step you will insert, update, and replace service histories for some of the cars in the database.
 
-Imagine a data entry error, all of the status entries for LumaCore are incorrect.
-LumaCore is a `GOLD` status customer but status for each order was entered as `BASIC`.
-Change the `status` for LumaCore to `GOLD`.
+Start by adding service histories for all three cars.
+Initially, add `Oil change` in `JAN` for all three.
 
-✅ Change the status
+✅ Add the oil changes
 ```
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore';
+UPDATE customers SET service_history = {'JAN':'Oil change'} 
+  WHERE email = 'noam@example.com' AND vin = '1H1234';
+
+UPDATE customers SET service_history = {'JAN':'Oil change'} 
+  WHERE email = 'ira@example.com' AND vin = '2C3456';
+UPDATE customers SET service_history = {'JAN':'Oil change'} 
+  WHERE email = 'ira@example.com' AND vin = '5Y4567';
 ```{{exec}}
 
-The update failed!
-
-![uodate failed](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/failed-update.jpg)
-
-According to the error message the `UPDATE` did not includ the clustering column, `order_id`. 
-The update had to fully specify the primary key: all the *partition key* and *clustering key* columns.
-
-Try the update again with the clustering column.
-
-✅ Change the status
+✅ View the updated table
 ```
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1410;
+SELECT * FROM customers;
 ```{{exec}}
 
-Look at the results. 
+Next you are going to make some changes to the service histories. 
+First, you will add `Tire rotation` to Ira's Chrysler (VIN 2C3456) in February.
 
-✅ View the data
+✅ Add the tire rotation
 ```
-SELECT * FROM orders;
+UPDATE customers SET service_history = service_history + {'FEB':'Tire rotation'}
+  WHERE email = 'ira@example.com' AND vin = '2C3456';
 ```{{exec}}
 
-![GOLD](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab03/gold.jpg)
-
-The status is now `GOLD` but only for order `2100`.
-
-You will need to set the `status` to `GOLD` for each row.
-
-✅ Change the status for the remaining rows.
+✅ View the service history for Ira's Chrysler
 ```
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
-UPDATE orders SET status = 'GOLD' WHERE customer = 'LumaCore' AND order_id = 1411;
+SELECT service_history FROM customers
+  WHERE email = 'ira@example.com' AND vin = '2C3456';
 ```{{exec}}
 
-✅ View the data
-```
-SELECT * FROM orders;
-```{{exec}}
+You should see the `Tire rotation` and the `Oil change`.
 
-All of the orders for LumaCore show `GOLD` status. 
-But we had to update each row make the change.
+**Note:** The entries will not beordered by *month*.
+They will be ordered by alphabetically by *key value*.
+Cassandra knows your keys are `text` but does not now how to interpret them.  

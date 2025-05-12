@@ -55,17 +55,21 @@ Unlike in a relational database, you cannot declare other columns as required in
 ```
 -- Customer 1 with one car
 INSERT INTO customers (email, vin, make, year, color)
-VALUES ('noam@example.com', '1H1234', 'Honda', 2020, 'Blue');
+VALUES ('noam@example.com', '1H1234', 'Ford', 2020, 'Blue');
 
 -- Customer 2 with two cars
 INSERT INTO customers (email, vin, make, year, color)
 VALUES ('ira@example.com', '2C3456', 'Chrysler', 2018, 'Black');
 
 INSERT INTO customers (email, vin, make, year, color)
-VALUES ('ira@example.com', '5Y4567', 'Tesla', 2021, 'Red');
+VALUES ('ira@example.com', '5Y4567', 'Chevy', 2021, 'Red');
 ```{{exec}}
 
 ✅ View the `customers` table
 ```
 SELECT * FROM customers;
 ```{{exec}}
+
+Notice that the `service_history` column is `null`. 
+The `null` in the `service_history` column *does not* represent a tombstone.
+If the `INSERT` statement had expicitly set the column to `null`, there would have been a tombstone.
