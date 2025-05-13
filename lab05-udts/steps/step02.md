@@ -9,7 +9,7 @@ You can even alter types (or tables) that are already in use like the `address` 
 When you add a column, all existing rows will have a `null` value in the new column.
 The `null` value is simply absent and does not cause a *tombstone* in the database.
 
-✅ Add the apartment nuber column
+✅ Add the apartment number column
 ```
 ALTER TYPE address ADD apt text;
 ```{{exec}}

@@ -1,44 +1,74 @@
-In this step you will update the schema of the UDT.
+In this step you will update the schema of the table.
 
-Cassandra is not *schemaless*, but schemas in Cassandra are flexible.
-In this case the *canonical* `address` type does not include the option to add an apartment number.
-You will nees to add an `apt` column to store optional apratment numbers.
-In Cassandra, you can use the `ALTER TYPE` command to add columns to a UDT (or table).
-You can even alter types (or tables) that are already in use like the `address` type in the `employees` table.
+In Cassandra, you can modify table schemas.
+You can add columns, but you cannot remove columns.
 
-When you add a column, all existing rows will have a `null` value in the new column.
-The `null` value is simply absent and does not cause a *tombstone* in the database.
+This table is missing some important information. 
+It is missing contact information.
 
-✅ Add the apartment nuber column
+You will need to create a UDT to represent phone numbers and types.
+
+✅ Create the `phone` UDT
 ```
-ALTER TYPE address ADD apt text;
+CREATE TYPE phone (
+  type text,
+  number
+)
+```{{exec}}
+
+Many people have multiple phone numbers.
+For example someone may have a cell phone and a work phone.
+So you will modify the `customers` table to include a collection (`LIST`) of 'phone` types.
+You will have to declare the `phone` type `frozen` to nest it in a collection.
+
+✅ Modify the `costomers` table
+```
+ALTER TABLE customers 
+  ADD phones list<frozen<phone>>;
 ```{{exec}}
 
 ✅ View the table
 ```
-SELECT * FROM employees;
+SELECT * FROM customers;
 ```{{exec}}
 
-You should see the employee you entered (Yuri from fincance).
-Yuri's `address` now has an `apt` field.
-The `apt` field value is `null`
+For now there are no `phones` so the column is `null` for all customers.
+Modifying the table *did not* create tombstones in the table.
 
-Yuri's apartment umber is *201A*,
-Update the database to include Yuri's apartment number.
+Now, you are going to add phone numbers for the customers.
+For the first customer you will us an `INSERT` to add the phone numbers. 
+This may seem strange but because the primary key is already in the table, the `INSERT` will *upsert* data and act just like an `UPDATE`.
 
-✅ Add Yuri's apartment number
+✅ Use `INSERT` to add a phone number to Dani H
 ```
-UPDATE employees 
-  SET home_address.apt = '201A'
-  WHERE 
-    department = 'finance' 
-    AND 
-    employee_id = 'emp001';
+INSERT INTO customers (company, contact, phones) 
+  VALUES(
+    'AltoStrat',
+    {first: 'Dani', last: 'H'},
+    [
+      {type: 'mobile', number: '555-1234'},
+      {type: 'office', number: '555-5678'}
+    ]
+  );
 ```{{exec}}
 
 ✅ View the table
 ```
-SELECT * FROM employees;
+SELECT * FROM customers;
 ```{{exec}}
 
-You should see Yuri's apartment number in the table.
+You should now see `mobile` and `office` phones for Dani H.
+
+Now you will use `UPDATE` to add phones for Hao L.
+
+✅ Use `UPDATE` to add a phone number to Dani H
+```
+UPDATE customers SET phones =
+  [
+    {type: 'mobile', number: '555-1234'},
+  ]
+  WHERE
+    company = 'AltoStrat'
+  AND
+    contact = {first: 'Hao', last: 'L'};
+```{{exec}}
