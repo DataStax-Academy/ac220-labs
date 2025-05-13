@@ -27,7 +27,7 @@ This type will encapsulate first and last names.
 ```
 CREATE TYPE name (
   first text,
-  last text,
+  last text
 );
 ```{{exec}}
 
@@ -61,7 +61,7 @@ VALUES ('CymbalGroup', { first: 'Kim', last: 'Q' }, 'CTO');
 
 ✅ View the table
 ```
-SELECT * FROM employees;
+SELECT * FROM customers;
 ```{{exec}}
 
 You should see the customers you entered.
