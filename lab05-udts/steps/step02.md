@@ -1,75 +1,44 @@
-In this step you will insert, update, and replace service histories for some of the cars in the database.
+In this step you will update the schema of the UDT.
 
-Start by adding service histories for all three cars.
-Initially, add `Oil change` in `JAN` for all three.
+Cassandra is not *schemaless*, but schemas in Cassandra are flexible.
+In this case the *canonical* `address` type does not include the option to add an apartment number.
+You will nees to add an `apt` column to store optional apratment numbers.
+In Cassandra, you can use the `ALTER TYPE` command to add columns to a UDT (or table).
+You can even alter types (or tables) that are already in use like the `address` type in the `employees` table.
 
-✅ Add the oil changes
+When you add a column, all existing rows will have a `null` value in the new column.
+The `null` value is simply absent and does not cause a *tombstone* in the database.
+
+✅ Add the apartment nuber column
 ```
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
-
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
+ALTER TYPE address ADD apt text;
 ```{{exec}}
 
-✅ View the updated table
+✅ View the table
 ```
-SELECT * FROM customers;
+SELECT * FROM employees;
 ```{{exec}}
 
-Next you are going to make some changes to the service histories. 
-First, you will add `Tire rotation` to Ira's `Chrysler` (VIN 2C3456) in `FEB`.
+You should see the employee you entered (Yuri from fincance).
+Yuri's `address` now has an `apt` field.
+The `apt` field value is `null`
 
-✅ Add the tire rotation
+Yuri's apartment umber is *201A*,
+Update the database to include Yuri's apartment number.
+
+✅ Add Yuri's apartment number
 ```
-UPDATE customers SET service_history = service_history + {'FEB':'Tire rotation'}
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
+UPDATE employees 
+  SET home_address.apt = '201A'
+  WHERE 
+    department = 'finance' 
+    AND 
+    employee_id = 'emp001';
 ```{{exec}}
 
-✅ View the service history for Ira's `Chrysler`
+✅ View the table
 ```
-SELECT service_history FROM customers
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
+SELECT * FROM employees;
 ```{{exec}}
 
-You should see the `Tire rotation` and the `Oil change`.
-
-**Note:** The entries are not be ordered by *month*.
-They are ordered by alphabetically by *key value*.
-Cassandra knows that your keys are stored as `text` but it does not know how to interpret their meaning.  
-
-You can also update a map by updating or inserting an element by its key.
-The database shows that Noam's `Ford` had an `Oil change` in `JAN`. 
-Update the database to sho that Noam's `Ford` had a 'Tune up` in `JAN`
-
-✅ Add the tire rotation
-```
-UPDATE customers SET service_history['JAN'] = 'Tune up'
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
-```{{exec}}
-
-✅ View the service history for Noam's `Ford`
-```
-SELECT service_history FROM customers
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
-```{{exec}}
-
-You should see that Noam's `Ford` has a `Tune up` in `JAN`.
-
-Finally, you can delete an element using from a map its key. 
-Delete the `Oil change` for Ira's `Chevy` in `JAN`.
-
-✅ Delete the `JAN` service history entry for Ira's `Chevy`
-```
-DELETE service_history['JAN'] FROM customers
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
-```{{exec}}
-
-
-✅ View the service history for Ira's `Chevy`
-```
-SELECT service_history FROM customers
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
-```{{exec}}
+You should see Yuri's apartment number in the table.

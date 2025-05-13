@@ -66,6 +66,8 @@ VALUES ( 'finance', 'emp001', 'Yuri',
 );
 ```{{exec}}
 
-Notice that the `service_history` column is `null`. 
-The `null` in the `service_history` column *does not* represent a tombstone.
-If the `INSERT` statement had expicitly set the column to `null`, there would have been a tombstone.
+✅ View the table
+```
+SELECT * FROM employees;
+```{{exec}}
+
