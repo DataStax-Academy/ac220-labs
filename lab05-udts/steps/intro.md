@@ -1,7 +1,8 @@
 In this hands-on lab, you will:
 
-- Create a table and with a map 
-- Insert some data leaving the map colums empty
-- Add, delete, and update map data 
+- Create a UDT
+- Create a table that uses the UDT
+- Populate the table and UDT
+- Alter the UDT schema
 
 ❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
