@@ -22,7 +22,7 @@ USE hr;
 ```{{exec}}
 
 Next, you will create the `address` type.
-This type will encapsulate the canonical form for qa US address.
+This type will encapsulate the canonical form for a US address.
 
 ✅ Create the `addess` type
 ```
