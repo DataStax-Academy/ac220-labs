@@ -1,4 +1,4 @@
-In this step, you will use `cqlsh` to create a keyspace, a UDT and a table thjat uses the UDT.
+In this step, you will use `cqlsh` to create a keyspace, a UDT and a table that uses the UDT.
 The UDT will represent an address and you will use it in a table of employees.
 
 ✅ Use `cqlsh` to connect to Cassandra
