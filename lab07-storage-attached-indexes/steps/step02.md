@@ -1,19 +1,23 @@
-In this step you will update the schema of the table.
+In this step you will create some SAI indexes to support more queries in the `customers` table.
 
-In Cassandra, you can modify table schemas.
-You can add columns, but you cannot remove columns.
+The data you entered contains customers from multiple countries. 
+Execute a querie to retrieve all customers from the USA. and types.
 
-This table is missing some important information. 
-It is missing contact information.
-You will need to create a UDT to represent phone numbers and types.
-
-✅ Create the `phone` UDT
+✅ Retrieve USA customers
 ```
-CREATE TYPE phone (
-  type text,
-  number text,
-);
+SELECT * FROM customers WHERE country = 'USA';
 ```{{exec}}
+
+
+![USA](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab07/usa.jpg)
+
+
+
+
+
+
+
+
 
 Many people have multiple phone numbers.
 For example someone may have a cell phone and a work phone.
