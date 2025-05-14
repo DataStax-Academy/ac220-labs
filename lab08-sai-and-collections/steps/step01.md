@@ -33,7 +33,7 @@ In the map, you will use month as the key and sevice performed as the value.
 ✅ Create the table
 ```
 CREATE TABLE customers (
-  email text,
+  name text,
   vin text,
   make text,
   year int,
@@ -44,11 +44,6 @@ CREATE TABLE customers (
 ```{{exec}}
 
 Next, you will insert some customers into the table.
-For now, you will insert only customers and their cars.
-You will add service histories later.
-
-**Note:** In Cassandra, the only columns that must have values are the partition key and clustering columns.
-Unlike in a relational database, you cannot declare other columns as required in Cassandra.
 
 
 ✅ Insert the customers
@@ -58,7 +53,7 @@ INSERT INTO customers (
   email, vin, make, year, color, service_history
   ) 
 VALUES (
-  'noam@example.com', '1H1234', 'Ford', 2020, 'Blue',
+  'noam', '1H1234', 'Ford', 2020, 'Blue',
   {'JAN':'Oil change'} 
 );
 
@@ -67,7 +62,7 @@ INSERT INTO customers (
   email, vin, make, year, color, service_history
   ) 
 VALUES (
-  'ira@example.com', '2C3456', 'Chrysler', 2018, 'Black',
+  'ira', '2C3456', 'Chrysler', 2018, 'Black',
   {'MAR':'Oil change','JUN':'Tune up'} 
 );
 
@@ -76,8 +71,8 @@ INSERT INTO customers (
   email, vin, make, year, color, service_history
   ) 
 VALUES (
-  'ira@example.com', '5Y4567', 'Chevy', 2021, 'Red',
-  {'JAN':'Rotate tires','APR':'Brake service','JUL':'Tune up'} 
+  'ira', '5Y4567', 'Chevy', 2021, 'Red',
+  {'JAN':'Tire rotation','APR':'Brake service','JUL':'Tune up'} 
 );
 
 ```{{exec}}
@@ -86,7 +81,3 @@ VALUES (
 ```
 SELECT * FROM customers;
 ```{{exec}}
-
-Notice that the `service_history` column is `null`. 
-The `null` in the `service_history` column *does not* represent a tombstone.
-If the `INSERT` statement had expicitly set the column to `null`, there would have been a tombstone.
