@@ -1,74 +1,73 @@
-In this step you will insert, update, and replace service histories for some of the cars in the database.
+In this step you will create indexes to support service history queries.
 
-Start by adding service histories for all three cars.
-Initially, add `Oil change` in `JAN` for all three.
+Because the service history is stored in a map you will not be able to query it directly.
+You will have to create indexes for the queries you need.
 
-✅ Add the oil changes
+✅ Start by creating a `KEYS` index
 ```
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
-UPDATE customers SET service_history = {'JAN':'Oil change'} 
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
+CREATE INDEX service_key_idx 
+  ON customers(KEYS(service_history)) using 'SAI';
 ```{{exec}}
 
-✅ View the updated table
+Since you created a `KEYS` index, you can now use keys in your `WHERE` clauses.
+
+✅ Find all the customers that had service done in `JAN`
 ```
-SELECT * FROM customers;
+SELECT * FROM customers 
+  WHERE service_history CONTAINS KEY 'JAN';
 ```{{exec}}
 
-Next you are going to make some changes to the service histories. 
-First, you will add `Tire rotation` to Ira's `Chrysler` (VIN 2C3456) in `FEB`.
+You should see that in `JAN`, Noam's blue Ford had an oil change, and Ira's red Chevy had a tire rotation.
 
-✅ Add the tire rotation
+Using the `KEYS` index, you were able to discover when service were performed.
+To run a query that returns what services were performed, you will need a `VALUES` index.
+Since service names are often made up of multiple words, it may be helpful to make the `VALUES` index case-insensitive.
+
+✅ Create a case-insensitve `VALUES` index
 ```
-UPDATE customers SET service_history = service_history + {'FEB':'Tire rotation'}
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
+CREATE INDEX service_value_idx 
+  ON customers(VALUES(service_history)) using 'SAI'
+  WITH OPTIONS = {'case_sensitive': 'false'};
 ```{{exec}}
 
-✅ View the service history for Ira's `Chrysler`
+Now you can execute a query to find all customers who had a specific service done, regardless of the month.
+In this case, you will serch for customers who have had a tune up.
+Since the `VALUES` index is case-insensitive the `WHERE` clause will use `tune up`.
+
+
+✅ Find customers who have had a `tune up`
 ```
-SELECT service_history FROM customers
-  WHERE email = 'ira@example.com' AND vin = '2C3456';
+SELECT * FROM customers 
+  WHERE service_history CONTAINS 'tune up';
 ```{{exec}}
 
-You should see the `Tire rotation` and the `Oil change`.
+You should see that Ira's black Chrysler and red Chevy both had tune ups.
 
-**Note:** The entries are not be ordered by *month*.
-They are ordered by alphabetically by *key value*.
-Cassandra knows that your keys are stored as `text` but it does not know how to interpret their meaning.  
+Sometimes, you need to search keys and values.
+SAI supports `ENTRIES` indexes to match key and value in a `Where` clause.
 
-You can also update a map by updating or inserting an element by its key.
-The database shows that Noam's `Ford` had an `Oil change` in `JAN`. 
-Update the database to sho that Noam's `Ford` had a 'Tune up` in `JAN`
-
-✅ Add the tire rotation
+✅ Create the `Entries` index
 ```
-UPDATE customers SET service_history['JAN'] = 'Tune up'
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
+CREATE INDEX service_entry_idx 
+  ON customers(ENTRIES(service_history)) using 'SAI';
 ```{{exec}}
 
-✅ View the service history for Noam's `Ford`
+✅ Find the customers who had brake service done in April
 ```
-SELECT service_history FROM customers
-  WHERE email = 'noam@example.com' AND vin = '1H1234';
+SELECT * FROM customers 
+  WHERE service_history['APR'] = 'Brake service';
 ```{{exec}}
 
-You should see that Noam's `Ford` has a `Tune up` in `JAN`.
+You can combine primary key fields and indexed fields in a `WHERE` clause.
+You still have to follow the rules about using the entire partition key and constraining slustering columns from L-R.
 
-Finally, you can delete an element using from a map its key. 
-Delete the `Oil change` for Ira's `Chevy` in `JAN`.
-
-✅ Delete the `JAN` service history entry for Ira's `Chevy`
+✅ Find the Ira's cars that had oil changes
 ```
-DELETE service_history['JAN'] FROM customers
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
+SELECT * FROM customers 
+  WHERE 
+    name = 'Ira' 
+  AND 
+    servce_history CONTAINS 'oil change';
 ```{{exec}}
 
-
-✅ View the service history for Ira's `Chevy`
-```
-SELECT service_history FROM customers
-  WHERE email = 'ira@example.com' AND vin = '5Y4567';
-```{{exec}}
+You should see that Ira's black Chrysler had an oil change.
