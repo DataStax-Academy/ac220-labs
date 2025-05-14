@@ -51,7 +51,7 @@ INSERT INTO customers (country, city, customer_id, name, email)
 VALUES ('France', 'Paris', 17583, 'Nur', 'nur@altostrat.com');
 
 INSERT INTO customers (country, city, customer_id, name, email)
-VALUES ('Japan', 'Tokyo', 62714, 'Tristan', 'tristan@cymbalgroup.com');
+VALUES ('USA', 'Detroit', 62714, 'Tristan', 'tristan@cymbalgroup.com');
 
 INSERT INTO customers (country, city, customer_id, name, email)
 VALUES ('Nigeria', 'Lagos', 90352, 'Bola', 'bola@altostrat.com');
@@ -65,3 +65,13 @@ SELECT * FROM customers;
 
 You should see the customers you entered.
 
+Exequte a query to retrieve all customes in Chicago, USA. 
+Since `country` and `city` make up the composite partition key, this query will retrive an entire partition.
+
+✅ View the table
+```
+SELECT * FROM customers
+  WHERE country = 'USA' AND city = 'Chicago';
+```{{exec}}
+
+You should see both customers from Chicago.
