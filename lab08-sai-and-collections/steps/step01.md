@@ -53,7 +53,7 @@ INSERT INTO customers (
   name, vin, make, year, color, service_history
   ) 
 VALUES (
-  'noam', '1H1234', 'Ford', 2020, 'Blue',
+  'Noam', '1H1234', 'Ford', 2020, 'Blue',
   {'JAN':'Oil change'} 
 );
 
@@ -62,7 +62,7 @@ INSERT INTO customers (
   name, vin, make, year, color, service_history
   ) 
 VALUES (
-  'ira', '2C3456', 'Chrysler', 2018, 'Black',
+  'Ira', '2C3456', 'Chrysler', 2018, 'Black',
   {'MAR':'Oil change','JUN':'Tune up'} 
 );
 
@@ -71,7 +71,7 @@ INSERT INTO customers (
   name, vin, make, year, color, service_history
   ) 
 VALUES (
-  'ira', '5Y4567', 'Chevy', 2021, 'Red',
+  'Ira', '5Y4567', 'Chevy', 2021, 'Red',
   {'JAN':'Tire rotation','APR':'Brake service','JUL':'Tune up'} 
 );
 

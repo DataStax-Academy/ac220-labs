@@ -67,7 +67,7 @@ SELECT * FROM customers
   WHERE 
     name = 'Ira' 
   AND 
-    servce_history CONTAINS 'oil change';
+    service_history CONTAINS 'oil change';
 ```{{exec}}
 
 You should see that Ira's black Chrysler had an oil change.
