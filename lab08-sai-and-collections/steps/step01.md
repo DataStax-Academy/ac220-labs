@@ -24,7 +24,7 @@ USE dealership;
 
 Next, you will create the `customers` table.
 This table is for a car dealership to track cars and their service histories.
-You will use customer email as the partition key.
+You will use customer name as the partition key.
 Customers may have multiple cars so you will use the car's vehicle identification number (VIN) the clustering column.
 The table should also include model, year amd color.
 Finaly, use a map to store the service history for the car.
