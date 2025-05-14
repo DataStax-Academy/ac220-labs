@@ -54,7 +54,7 @@ INSERT INTO customers (country, city, customer_id, name, email)
 VALUES ('USA', 'Detroit', 62714, 'Tristan', 'tristan@cymbalgroup.com');
 
 INSERT INTO customers (country, city, customer_id, name, email)
-VALUES ('Nigeria', 'Lagos', 90352, 'Bola', 'bola@altostrat.com');
+VALUES ('Nigeria', 'Lagos', 90352, 'Ariel', 'ariel@cymbalgroup.com');
 
 ```{{exec}}
 
