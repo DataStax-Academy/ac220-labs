@@ -20,7 +20,7 @@ For example someone may have a cell phone and a work phone.
 So you will modify the `customers` table to include a collection (`LIST`) of `phone` types.
 You will have to declare the `phone` type `frozen` to nest it in a collection.
 
-✅ Modify the `costomers` table
+✅ Modify the `customers` table
 ```
 ALTER TABLE customers 
   ADD phones list<frozen<phone>>;
