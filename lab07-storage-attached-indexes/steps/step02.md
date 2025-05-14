@@ -5,82 +5,69 @@ Execute a querie to retrieve all customers from the USA. and types.
 
 ✅ Retrieve USA customers
 ```
-SELECT * FROM customers WHERE country = 'USA';
+SELECT * FROM customers 
+  WHERE country = 'USA';
 ```{{exec}}
 
+This query failed because the `WHERE` clause did not include the entire partition key.
+Even though `country` is *a* primary key column, the table has a composite primary key and queries *must* include all primary key columns in their `WHERE` clauses.
+
+**Note:** The error message suggests that you could use `ALLOW FILTERING` to perform thes query. 
+**DO NOT USE** `ALLLOW FILTERING`!! 
+The result would be a *full table scan* and potentially unnacceptable performance.
 
 ![USA](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab07/usa.jpg)
 
+Use SAI to enable queries by `country`.
+SAI supports indexing partition key columns. 
+Of course, if the table has a single-column partition key, indexing is not necessary.
 
-
-
-
-
-
-
-
-Many people have multiple phone numbers.
-For example someone may have a cell phone and a work phone.
-So you will modify the `customers` table to include a collection (`LIST`) of `phone` types.
-You will have to declare the `phone` type `frozen` to nest it in a collection.
-
-✅ Modify the `costomers` table
+✅ Create an SAI index on `country`
 ```
-ALTER TABLE customers 
-  ADD phones list<frozen<phone>>;
+CREATE INDEX country_idx 
+  ON customers(country) USING 'SAI';
 ```{{exec}}
 
-✅ View the table
+
+Try the query again.
+You do not need to reference the index in your query.
+If the column has an index, Cassandra will us it.
+
+✅ Retrieve USA customers
 ```
-SELECT * FROM customers;
+SELECT * FROM customers 
+  WHERE country = 'USA';
 ```{{exec}}
 
-For now there are no `phones` so the column is `null` for all customers.
-Modifying the table *did not* create tombstones in the table.
+You should now see all three USA customers.
 
-Now, you are going to add phone numbers for the customers.
-For the first customer you will us an `INSERT` to add the phone numbers. 
-This may seem strange, but because the primary key is already in the table, the `INSERT` will *upsert* data and act just like an `UPDATE`.
+You may have noticed that there are two customers named `Ariel` in the table.
+Write a query to retrieve all the `Ariel`s.
 
-**Note:** Normally you would add the phone numbers using an `UPDATE` command. To be certain that you are updating an existing row, you could use a *lightweight transaction (LWT)*.
-
-✅ Use `INSERT` to add a phone number to Dani H
+✅ Retrieve all customers named Ariel
 ```
-INSERT INTO customers (company, contact, phones) 
-  VALUES(
-    'AltoStrat',
-    {first: 'Dani', last: 'H'},
-    [
-      {type: 'mobile', number: '555-1234'},
-      {type: 'office', number: '555-5678'}
-    ]
-  );
+SELECT * FROM customers 
+  WHERE name = 'Ariel';
 ```{{exec}}
 
-✅ View the table
+You should see the same error as before.
+
+Remember the rule in Cassandra. 
+If a query has a `WHERE` clause, it must first refere to the all the columns of the partition key.
+Next, it may refer to the clustering columns in the order they appear.
+
+You will need to create an index on the `name` field to perfrom this query.
+
+✅ Create an SAI index on `name`
 ```
-SELECT * FROM customers;
+CREATE INDEX name_idx 
+  ON customers(name) USING 'SAI';
 ```{{exec}}
 
-You should now see `mobile` and `office` phones for Dani H.
-
-Now you will use `UPDATE` to add phones for Hao L.
-
-✅ Use `UPDATE` to add a phone number
+✅ Retrieve all customers named Ariel
 ```
-UPDATE customers SET phones =
-  [
-    {type: 'mobile', number: '555-1234'}
-  ]
-  WHERE
-    company = 'AltoStrat'
-  AND
-    contact = {first: 'Hao', last: 'L'};
+SELECT * FROM customers 
+  WHERE name = 'Ariel';
 ```{{exec}}
 
-✅ View the table
-```
-SELECT * FROM customers;
-```{{exec}}
-
-You should now see phone numbers for both Hao L and Dani H.
+You should now see both `Ariel`s from the table.
