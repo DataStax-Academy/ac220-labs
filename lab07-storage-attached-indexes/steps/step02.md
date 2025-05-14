@@ -1,7 +1,7 @@
 In this step you will create some SAI indexes to support more queries in the `customers` table.
 
 The data you entered contains customers from multiple countries. 
-Execute a querie to retrieve all customers from the USA. and types.
+Execute a query to retrieve all customers from the USA. and types.
 
 ✅ Retrieve USA customers
 ```

@@ -68,7 +68,7 @@ You should see the customers you entered.
 Exequte a query to retrieve all customes in Chicago, USA. 
 Since `country` and `city` make up the composite partition key, this query will retrive an entire partition.
 
-✅ View the table
+✅ Find all the customers from `USA`, `Chicago`
 ```
 SELECT * FROM customers
   WHERE country = 'USA' AND city = 'Chicago';
