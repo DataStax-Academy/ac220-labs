@@ -54,15 +54,32 @@ Unlike in a relational database, you cannot declare other columns as required in
 ✅ Insert the customers
 ```
 -- Customer 1 with one car
-INSERT INTO customers (email, vin, make, year, color)
-VALUES ('noam@example.com', '1H1234', 'Ford', 2020, 'Blue');
+INSERT INTO customers (
+  email, vin, make, year, color, service_history
+  ) 
+VALUES (
+  'noam@example.com', '1H1234', 'Ford', 2020, 'Blue',
+  {'JAN':'Oil change'} 
+);
 
 -- Customer 2 with two cars
-INSERT INTO customers (email, vin, make, year, color)
-VALUES ('ira@example.com', '2C3456', 'Chrysler', 2018, 'Black');
+INSERT INTO customers (
+  email, vin, make, year, color, service_history
+  ) 
+VALUES (
+  'ira@example.com', '2C3456', 'Chrysler', 2018, 'Black',
+  {'MAR':'Oil change','JUN':'Tune up'} 
+);
 
-INSERT INTO customers (email, vin, make, year, color)
-VALUES ('ira@example.com', '5Y4567', 'Chevy', 2021, 'Red');
+
+INSERT INTO customers (
+  email, vin, make, year, color, service_history
+  ) 
+VALUES (
+  'ira@example.com', '5Y4567', 'Chevy', 2021, 'Red',
+  {'JAN':'Rotate tires','APR':'Brake service','JUL':'Tune up'} 
+);
+
 ```{{exec}}
 
 ✅ View the `customers` table

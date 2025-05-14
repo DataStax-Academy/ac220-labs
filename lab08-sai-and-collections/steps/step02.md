@@ -7,7 +7,6 @@ Initially, add `Oil change` in `JAN` for all three.
 ```
 UPDATE customers SET service_history = {'JAN':'Oil change'} 
   WHERE email = 'noam@example.com' AND vin = '1H1234';
-
 UPDATE customers SET service_history = {'JAN':'Oil change'} 
   WHERE email = 'ira@example.com' AND vin = '2C3456';
 UPDATE customers SET service_history = {'JAN':'Oil change'} 
