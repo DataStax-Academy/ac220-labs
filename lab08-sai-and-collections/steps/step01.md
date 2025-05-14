@@ -39,7 +39,7 @@ CREATE TABLE customers (
   year int,
   color text,
   service_history map<text,text>,
-  PRIMARY KEY ((email), vin)
+  PRIMARY KEY ((name), vin)
 );
 ```{{exec}}
 
@@ -50,7 +50,7 @@ Next, you will insert some customers into the table.
 ```
 -- Customer 1 with one car
 INSERT INTO customers (
-  email, vin, make, year, color, service_history
+  name, vin, make, year, color, service_history
   ) 
 VALUES (
   'noam', '1H1234', 'Ford', 2020, 'Blue',
@@ -59,7 +59,7 @@ VALUES (
 
 -- Customer 2 with two cars
 INSERT INTO customers (
-  email, vin, make, year, color, service_history
+  name, vin, make, year, color, service_history
   ) 
 VALUES (
   'ira', '2C3456', 'Chrysler', 2018, 'Black',
@@ -68,7 +68,7 @@ VALUES (
 
 
 INSERT INTO customers (
-  email, vin, make, year, color, service_history
+  name, vin, make, year, color, service_history
   ) 
 VALUES (
   'ira', '5Y4567', 'Chevy', 2021, 'Red',
