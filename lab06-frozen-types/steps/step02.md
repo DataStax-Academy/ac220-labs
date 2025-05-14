@@ -12,13 +12,13 @@ You will need to create a UDT to represent phone numbers and types.
 ```
 CREATE TYPE phone (
   type text,
-  number
-)
+  number text,
+);
 ```{{exec}}
 
 Many people have multiple phone numbers.
 For example someone may have a cell phone and a work phone.
-So you will modify the `customers` table to include a collection (`LIST`) of 'phone` types.
+So you will modify the `customers` table to include a collection (`LIST`) of `phone` types.
 You will have to declare the `phone` type `frozen` to nest it in a collection.
 
 ✅ Modify the `costomers` table
@@ -65,7 +65,7 @@ Now you will use `UPDATE` to add phones for Hao L.
 ```
 UPDATE customers SET phones =
   [
-    {type: 'mobile', number: '555-1234'},
+    {type: 'mobile', number: '555-1234'}
   ]
   WHERE
     company = 'AltoStrat'
