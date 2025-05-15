@@ -71,3 +71,6 @@ SELECT
 nodeA/bin/cqlsh 172.30.1.10 -f \
   data/similarity-lined-up.cql
 ```{{exec}}
+
+You should see the similarity values for each of the 10 sentences in the database.
+The results should line up with the 5 ANN matches you found previously.
