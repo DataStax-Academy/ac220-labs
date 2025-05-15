@@ -36,7 +36,7 @@ CREATE TABLE credits (
 );
 ```{{exec}}
 
-✅ Insert some entry data
+✅ Insert some student data
 ```
 INSERT INTO credits 
   (name, subject, hours, grade) 
