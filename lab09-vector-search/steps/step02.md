@@ -1,73 +1,56 @@
-In this step you will create indexes to support service history queries.
+In this step, you will execute an Vector Search using ANN.
+Then you will calculate similarity values for all of the sentences in the database.
 
-Because the service history is stored in a map you will not be able to query it directly.
-You will have to create indexes for the queries you need.
+Here are the sentences you loaded in the database.
 
-✅ Start by creating a `KEYS` index
+- Security at the airport was moving slowly today.  
+- The flight attendants served drinks during the flight.  
+- She booked a flight to Paris for her vacation.  
+- She looked for her gate on the departure board.  
+- He waited in line to check in at the airport.  
+- Passengers boarded the airplane for an overnight flight.  
+- The airline delayed the flight due to bad weather.  
+- He packed his suitcase carefully for the trip.  
+- The cabin crew prepared the plane for landing.  
+- The plane taxied down the runway before takeoff.  
+
+The first thing you will do is execute a Vector Search using ANN.
+
+You will look for a match for this sentence:  
+
+"Travelers lined up at the gate as the final boarding call was announced."
+
+The query you are going to run looks like this:
+
 ```
-CREATE INDEX service_key_idx 
-  ON customers(KEYS(service_history)) using 'SAI';
+SELECT sentence FROM vectors.sentences ORDER BY vals ANN OF [0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, -0.015110083855688572, ...] LIMIT 5;
+
+```
+
+Since you are running the query from a file, you will have to get out of `cqlsh` and run it from the command line.
+
+✅ Exit `cqlsh`
+```
+exit
 ```{{exec}}
 
-Since you created a `KEYS` index, you can now use keys in your `WHERE` clauses.
 
-✅ Find all the customers that had service done in `JAN`
+✅ Run the ANN query
 ```
-SELECT * FROM customers 
-  WHERE service_history CONTAINS KEY 'JAN';
+nodeA/bin/cqlsh 172.30.1.10 -f data/data/match-lined-up.cql
 ```{{exec}}
 
-You should see that in `JAN`, Noam's blue Ford had an oil change, and Ira's red Chevy had a tire rotation.
 
-Using the `KEYS` index, you were able to discover when service were performed.
-To run a query that returns what services were performed, you will need a `VALUES` index.
-Since service names are often made up of multiple words, it may be helpful to make the `VALUES` index case-insensitive.
 
-✅ Create a case-insensitve `VALUES` index
 ```
-CREATE INDEX service_value_idx 
-  ON customers(VALUES(service_history)) using 'SAI'
-  WITH OPTIONS = {'case_sensitive': 'false'};
-```{{exec}}
-
-Now you can execute a query to find all customers who had a specific service done, regardless of the month.
-In this case, you will serch for customers who have had a tune up.
-Since the `VALUES` index is case-insensitive the `WHERE` clause will use `tune up`.
-
-
-✅ Find customers who have had a `tune up`
+SELECT 
+  sentence, similarity_cosine(vals,[0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, ...])
+  AS similarity FROM sentences 
+  ORDER BY vals ANN OF [0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, ...] 
+  LIMIT 10; 
 ```
-SELECT * FROM customers 
-  WHERE service_history CONTAINS 'tune up';
-```{{exec}}
 
-You should see that Ira's black Chrysler and red Chevy both had tune ups.
-
-Sometimes, you need to search keys and values.
-SAI supports `ENTRIES` indexes to match key and value in a `Where` clause.
-
-✅ Create the `Entries` index
+✅ Check the similarity values
 ```
-CREATE INDEX service_entry_idx 
-  ON customers(ENTRIES(service_history)) using 'SAI';
+nodeA/bin/cqlsh 172.30.1.10 -f data/data/similarity-lined-up.cql
 ```{{exec}}
-
-✅ Find the customers who had brake service done in April
-```
-SELECT * FROM customers 
-  WHERE service_history['APR'] = 'Brake service';
-```{{exec}}
-
-You can combine primary key fields and indexed fields in a `WHERE` clause.
-You still have to follow the rules about using the entire partition key and constraining slustering columns from L-R.
-
-✅ Find the Ira's cars that had oil changes
-```
-SELECT * FROM customers 
-  WHERE 
-    name = 'Ira' 
-  AND 
-    service_history CONTAINS 'oil change';
-```{{exec}}
-
-You should see that Ira's black Chrysler had an oil change.

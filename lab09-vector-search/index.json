@@ -7,7 +7,9 @@
     "details": {
       "assets": {
         "host01": [
-          {"file": "vectors.csv", "target": "/assets", "chmod": "+r"}
+          {"file": "vectors.csv", "target": "/assets", "chmod": "+r"},
+          {"file": "match-lined-up.cql", "target": "/assets", "chmod": "+r"}, 
+          {"file": "similarity-lined-up.cql", "target": "/assets", "chmod": "+r"}
         ]
       },
       "steps": [
