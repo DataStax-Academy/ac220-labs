@@ -54,16 +54,16 @@ CREATE INDEX sentences_idx
 
 These are the sentences from which the embeddings were generated:
 
-Security at the airport was moving slowly today.  
-The flight attendants served drinks during the flight.  
-She booked a flight to Paris for her vacation.  
-She looked for her gate on the departure board.  
-He waited in line to check in at the airport.  
-Passengers boarded the airplane for an overnight flight.  
-The airline delayed the flight due to bad weather.  
-He packed his suitcase carefully for the trip.  
-The cabin crew prepared the plane for landing.  
-The plane taxied down the runway before takeoff.  
+- Security at the airport was moving slowly today.  
+- The flight attendants served drinks during the flight.  
+- She booked a flight to Paris for her vacation.  
+- She looked for her gate on the departure board.  
+- He waited in line to check in at the airport.  
+- Passengers boarded the airplane for an overnight flight.  
+- The airline delayed the flight due to bad weather.  
+- He packed his suitcase carefully for the trip.  
+- The cabin crew prepared the plane for landing.  
+- The plane taxied down the runway before takeoff.  
 
 The pre-generated vectors (embedddings) are in a data file.
 Load the file into the database using `COPY FROM`.
