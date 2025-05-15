@@ -3,7 +3,7 @@ Next, you will load the embeddings from a file and finally you will do some simi
 
 **Note:** The embeddings in this lab were generated using Google's *Universal Sentence Encoder*. 
 The embeddings have 512 dimensions and are to large examine in this lab.
-Therefore both the embeddings that you will index in the database and the ones you will use to query for matches have been pre-generated and stored in file.
+Therefore both the embeddings that you will index in the database and the ones you will use to query for matches have been pre-generated and stored in files.
 
 If you would like to explore embeddings in detail, check out this 
 [colab](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/hub/tutorials/semantic_similarity_with_tf_hub_universal_encoder.ipynb#scrollTo=zwty8Z6mAkdV)
@@ -31,7 +31,7 @@ CREATE KEYSPACE vectors WITH replication = {
 USE vectors;
 ```{{exec}}
 
-The data you will use in this lab consists of 40 English sentences and their 512d vector encodings from the Universal Sentence Encoder. 
+The data you will use in this lab consists of 10 English sentences and their 512d vector encodings from the Universal Sentence Encoder. 
 The vectors are floating point values.
 
 ✅ Create the table
@@ -51,6 +51,19 @@ Create an index on the vector column for ANN using SAI.
 CREATE INDEX sentences_idx 
   ON sentences(vals) USING 'sai';
 ```{{exec}}
+
+These are the sentences from which the embeddings were generated:
+
+Security at the airport was moving slowly today.  
+The flight attendants served drinks during the flight.  
+She booked a flight to Paris for her vacation.  
+She looked for her gate on the departure board.  
+He waited in line to check in at the airport.  
+Passengers boarded the airplane for an overnight flight.  
+The airline delayed the flight due to bad weather.  
+He packed his suitcase carefully for the trip.  
+The cabin crew prepared the plane for landing.  
+The plane taxied down the runway before takeoff.  
 
 The pre-generated vectors (embedddings) are in a data file.
 Load the file into the database using `COPY FROM`.
