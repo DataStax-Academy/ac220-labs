@@ -38,14 +38,21 @@ Since you are running the query from a file, you will have to get out of `cqlsh`
 exit
 ```{{exec}}
 
-
 ✅ Run the ANN query
 ```
-nodeA/bin/cqlsh 172.30.1.10 \  
-  -f data/data/match-lined-up.cql
+nodeA/bin/cqlsh 172.30.1.10 -f \
+  data/match-lined-up.cql
 ```{{exec}}
 
+You should see the 5 closest matches for:
 
+"Travelers lined up at the gate as the final boarding call was announced."
+
+The closest match also talks about a *gate* and the second closest talks about being *in line*.
+
+Next, you are going to get a list of the similarity metrics for the same sentence with the 10 sentences in the database.
+
+This is what the query looks like:
 
 ```
 SELECT 
@@ -61,5 +68,6 @@ SELECT
 
 ✅ Check the similarity values
 ```
-nodeA/bin/cqlsh 172.30.1.10 -f data/data/similarity-lined-up.cql
+nodeA/bin/cqlsh 172.30.1.10 -f \
+  data/similarity-lined-up.cql
 ```{{exec}}
