@@ -59,7 +59,7 @@ SELECT
   sentence, similarity_cosine(  
      vals,[0.004221492912620306, -0.010184873826801777,  
     -0.05917729064822197, -0.03681538999080658, ...])  
-  AS similarity FROM sentences  
+  AS similarity FROM vectors.sentences  
   ORDER BY vals ANN OF [0.004221492912620306,  
     -0.010184873826801777, -0.05917729064822197,  
     -0.03681538999080658, ...]  
