@@ -23,7 +23,11 @@ You will look for a match for this sentence:
 The query you are going to run looks like this:
 
 ```
-SELECT sentence FROM vectors.sentences ORDER BY vals ANN OF [0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, -0.015110083855688572, ...] LIMIT 5;
+SELECT sentence FROM vectors.sentences  
+  ORDER BY vals ANN OF [0.004221492912620306,  
+  -0.010184873826801777, -0.05917729064822197,  
+  -0.03681538999080658, -0.015110083855688572,  
+  ...] LIMIT 5;
 
 ```
 
@@ -37,16 +41,21 @@ exit
 
 ✅ Run the ANN query
 ```
-nodeA/bin/cqlsh 172.30.1.10 -f data/data/match-lined-up.cql
+nodeA/bin/cqlsh 172.30.1.10 \  
+  -f data/data/match-lined-up.cql
 ```{{exec}}
 
 
 
 ```
 SELECT 
-  sentence, similarity_cosine(vals,[0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, ...])
-  AS similarity FROM sentences 
-  ORDER BY vals ANN OF [0.004221492912620306, -0.010184873826801777, -0.05917729064822197, -0.03681538999080658, ...] 
+  sentence, similarity_cosine(  
+     vals,[0.004221492912620306, -0.010184873826801777,  
+    -0.05917729064822197, -0.03681538999080658, ...])  
+  AS similarity FROM sentences  
+  ORDER BY vals ANN OF [0.004221492912620306,  
+    -0.010184873826801777, -0.05917729064822197,  
+    -0.03681538999080658, ...]  
   LIMIT 10; 
 ```
 
