@@ -123,7 +123,7 @@ mkdir -p $HOME_DIR/data
 
 mv /assets/vectors.csv             $HOME_DIR/data/vectors.csv
 mv /assets/match-lined-up.cql      $HOME_DIR/data/match-lined-up.cql
-mv /assets/similarity-lined-up.cql $HOME_DIR/similarity-lined-up.cql
+mv /assets/similarity-lined-up.cql $HOME_DIR/data/similarity-lined-up.cql
 
 chown -R cassandra-user:cassandra "$HOME_DIR"
 
