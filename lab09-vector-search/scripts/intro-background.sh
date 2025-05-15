@@ -115,6 +115,14 @@ for NODE in nodeA; do
 
 done
 
+#
+# Handle the uploaded assets
+#
+
+mkdir -p $HOME_DIR/data
+
+mv /assets/vectors.csv $HOME_DIR/data/vectors.csv
+
 chown -R cassandra-user:cassandra "$HOME_DIR"
 
 #
