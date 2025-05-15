@@ -86,27 +86,17 @@ Look at the data you entered.
 SELECT * FROM credits;
 ```{{exec}}
 
-Next, you will use a `WHERE` clause with a range to select all the entries on April 3, 2025.
+Each course has a number of hours and a grade from 0.0 to 4.0.
+Grade point average (gpa) is
 
-✅ Select all entries from April 3
+![GPA](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab10/gpa.jpg)
+
+✅ Select all data
 ```
-SELECT employee_name, entry_time
-FROM entry
-WHERE door_id = 4
-  AND entry_time >= '2025-04-03 00:00:00-0500'
-  AND entry_time <  '2025-04-04 00:00:00-0500';
+SELECT 
+  name AS student, 
+  SUM(hours) AS hours,
+  SUM(hours * grade)/SUM(hours) AS gpa
+FROM credits
+GROUP BY name;
 ```{{exec}}
-
-You should see that Rosario, Lee and Tal all entered on April 3, and Lee entered twice.
-
-✅ Select the last entry on April 2
-```
-SELECT employee_name, entry_time
-FROM entry
-WHERE door_id = 4
-  AND entry_time >= '2025-04-02 00:00:00-0500'
-  AND entry_time <  '2025-04-03 00:00:00-0500'  
-  ORDER BY entry_time DESC LIMIT 1;
-```{{exec}}
-
-You should see that Tal was the last one to enter the facility on April 3 at 17:10:00.
