@@ -45,7 +45,7 @@ CREATE TABLE reviews_by_user (
   PRIMARY KEY ((user_id), review_id)
 );
 
-CREATE TABLE reviews_by_restaurants (
+CREATE TABLE reviews_by_restaurant (
  restaurant_id int,
  review_id int,
  user_id int,
@@ -68,7 +68,7 @@ BEGIN BATCH
     1, 100, 500, 'Taco Town', 'Great tacos and fast service!'
   );
 
-  INSERT INTO reviews_by_restaurants (
+  INSERT INTO reviews_by_restaurant (
     restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     500, 101, 1, 'Taco Town', 'Great tacos and fast service!'
@@ -87,7 +87,7 @@ BEGIN BATCH
     1, 102, 501, 'Red Lantern', 'My favorite buffet.'
   );
 
-  INSERT INTO reviews_by_restaurants (
+  INSERT INTO reviews_by_restaurant (
     restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     501, 103, 1, 'Red Lantern', 'My favorite buffet.'
@@ -101,7 +101,7 @@ BEGIN BATCH
     2, 104, 500, 'Taco Town', 'I love the burritos.'
   );
 
-  INSERT INTO reviews_by_restaurants (
+  INSERT INTO reviews_by_restaurant (
     restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     500, 105, 2, 'Taco Town', 'I love the burritos.'
@@ -115,9 +115,9 @@ APPLY BATCH;
 SELECT * FROM reviews_by_user;
 ```{{exec}}
 
-✅ Select all data from `reviews_by_restaurants`
+✅ Select all data from `reviews_by_restaurant`
 ```
-SELECT * FROM reviews_by_restaurants;
+SELECT * FROM reviews_by_restaurant;
 ```{{exec}}
 
 These tables are optimized for two specific queries. 
