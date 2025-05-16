@@ -40,7 +40,7 @@ CREATE TABLE reviews_by_user (
   user_id int,
   review_id int,
   restaurant_id int,
-  restarant_name text,
+  restaurant_name text,
   review text,
   PRIMARY KEY ((user_id), review_id)
 );
@@ -49,7 +49,7 @@ CREATE TABLE reviews_by_restaurants (
  restaurant_id int,
  review_id int,
  user_id int,
- restarant_name text,
+ restaurant_name text,
  review text,
  PRIMARY KEY ((restaurant_id), review_id)
 );
@@ -63,13 +63,13 @@ Use a `BATCH` to keep both tables in sync with the same data.
 ```
 BEGIN BATCH
   INSERT INTO reviews_by_user (
-    user_id, review_id, restaurant_id, restarant_name, review
+    user_id, review_id, restaurant_id, restaurant_name, review
   ) VALUES (
     1, 100, 500, 'Taco Town', 'Great tacos and fast service!'
   );
 
   INSERT INTO reviews_by_restaurants (
-    restaurant_id, review_id, user_id, restarant_name, review
+    restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     500, 101, 1, 'Taco Town', 'Great tacos and fast service!'
   );
@@ -82,13 +82,13 @@ Every time you do an `INSERT`, you do it in a batch to make sure that both table
 ```
 BEGIN BATCH
   INSERT INTO reviews_by_user (
-    user_id, review_id, restaurant_id, restarant_name, review
+    user_id, review_id, restaurant_id, restaurant_name, review
   ) VALUES (
     1, 102, 501, 'Red Lantern', 'My favorite buffet.'
   );
 
   INSERT INTO reviews_by_restaurants (
-    restaurant_id, review_id, user_id, restarant_name, review
+    restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     501, 103, 1, 'Red Lantern', 'My favorite buffet.'
   );
@@ -96,13 +96,13 @@ APPLY BATCH;
 
 BEGIN BATCH
   INSERT INTO reviews_by_user (
-    user_id, review_id, restaurant_id, restarant_name, review
+    user_id, review_id, restaurant_id, restaurant_name, review
   ) VALUES (
     2, 104, 500, 'Taco Town', 'I love the burritos.'
   );
 
   INSERT INTO reviews_by_restaurants (
-    restaurant_id, review_id, user_id, restarant_name, review
+    restaurant_id, review_id, user_id, restaurant_name, review
   ) VALUES (
     500, 105, 2, 'Taco Town', 'I love the burritos.'
   );
@@ -120,3 +120,19 @@ SELECT * FROM reviews_by_user;
 SELECT * FROM reviews_by_restaurants;
 ```{{exec}}
 
+These tables are optimized for two specific queries. 
+Here is one of these queries:
+
+✅ Find all the reviews from user `1`
+```
+SELECT restaurant_name, review 
+  FROM reviews_by_user WHERE user_id = 1;
+```{{exec}}
+
+Here is the other:
+✅ Find all the reviews from restaurant `500`
+```
+SELECT restaurant_name, review 
+  FROM reviews_by_restaurant 
+  WHERE restaurant_id = 500;
+```{{exec}}
