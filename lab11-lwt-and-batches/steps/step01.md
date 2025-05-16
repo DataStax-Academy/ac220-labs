@@ -40,7 +40,7 @@ CREATE TABLE orders (
 ✅ Insert some a row
 ```
 INSERT INTO orders(cust_id, order_id, item, count) 
-  VALUES (101, 334, 'Widget A', 1);
+  VALUES (101, 334, 'oranges', 1);
 ```{{exec}}
 
 Look at the data you entered.
