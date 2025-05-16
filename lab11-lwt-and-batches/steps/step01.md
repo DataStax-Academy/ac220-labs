@@ -71,7 +71,7 @@ BEGIN BATCH
   INSERT INTO reviews_by_restaurants (
     restaurant_id, review_id, user_id, restarant_name, review
   ) VALUES (
-    500, 100, 1, 'Taco Town', 'Great tacos and fast service!'
+    500, 101, 1, 'Taco Town', 'Great tacos and fast service!'
   );
 APPLY BATCH;
 ```{{exec}}
@@ -84,13 +84,13 @@ BEGIN BATCH
   INSERT INTO reviews_by_user (
     user_id, review_id, restaurant_id, restarant_name, review
   ) VALUES (
-    1, 100, 501, 'Red Lantern', 'My favorite buffet.'
+    1, 102, 501, 'Red Lantern', 'My favorite buffet.'
   );
 
   INSERT INTO reviews_by_restaurants (
     restaurant_id, review_id, user_id, restarant_name, review
   ) VALUES (
-    501, 100, 1, 'Red Lantern', 'My favorite buffet.'
+    501, 103, 1, 'Red Lantern', 'My favorite buffet.'
   );
 APPLY BATCH;
 
@@ -98,13 +98,13 @@ BEGIN BATCH
   INSERT INTO reviews_by_user (
     user_id, review_id, restaurant_id, restarant_name, review
   ) VALUES (
-    2, 100, 500, 'Taco Town', 'I love the burritos.'
+    2, 104, 500, 'Taco Town', 'I love the burritos.'
   );
 
   INSERT INTO reviews_by_restaurants (
     restaurant_id, review_id, user_id, restarant_name, review
   ) VALUES (
-    500, 100, 2, 'Taco Town', 'I love the burritos.'
+    500, 105, 2, 'Taco Town', 'I love the burritos.'
   );
 APPLY BATCH;
 ```{{exec}}
