@@ -110,12 +110,12 @@ APPLY BATCH;
 ```{{exec}}
 
 
-✅ Select all data from `reviews_by_user`
+✅ Select all data from reviews_by_user
 ```
 SELECT * FROM reviews_by_user;
 ```{{exec}}
 
-✅ Select all data from `reviews_by_restaurant`
+✅ Select all data from reviews_by_restaurant
 ```
 SELECT * FROM reviews_by_restaurant;
 ```{{exec}}
