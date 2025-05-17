@@ -16,12 +16,12 @@ SELECT restaurant_name, review
 
 Let's look at all the data from both tables again.
 
-✅ Select all data from `reviews_by_user`
+✅ Select all data from reviews_by_user
 ```
 SELECT * FROM reviews_by_user;
 ```{{exec}}
 
-✅ Select all data from `reviews_by_restaurant`
+✅ Select all data from reviews_by_restaurant
 ```
 SELECT * FROM reviews_by_restaurant;
 ```{{exec}}
@@ -65,7 +65,7 @@ Now, find all the reviews of Taco Town (`500`)
 
 Wait a minute!
 What happened?
-The original review `I love the burritos.` is still there, and now there is a new review with `null` in the `restaurant_name` and `user_id` columns.
+The original review `I love the burritos.` is still there, and now there is a new review `I love the churros.` with `null` in the `restaurant_name` and `user_id` columns.
 
 If you look back at the second `UPDATE` in the `BATCH` you see that the command used the wrong `review_id`.
 It should have been `102` but the command used `103`.
@@ -115,5 +115,5 @@ SELECT * FROM reviews_by_restaurant
   WHERE restaurant_id = 500;
 ```{{exec}}
 
-**Note:** Cassandra does not LWTs in batches, so we could not have used an LWT in the initial update batch.
+**Note:** Cassandra does not allow LWTs in batches, so we could not have used an LWT in the initial update batch.
 
