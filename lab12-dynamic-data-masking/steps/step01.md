@@ -93,25 +93,17 @@ The formula for grade point average (GPA) is
 ![GPA](https://killrcoda-file-store.s3.us-east-1.amazonaws.com/AC220/Lab10/gpa.jpg)
 
 You will use the `SUM` aggregate and the division operator to calculate GPA.
-
-✅ Get hours and gpa for Lucian B.
-```
-SELECT 
-  name AS student, 
-  SUM(hours) AS hours,
-  SUM(hours * grade)/SUM(hours) AS gpa
-FROM credits
-WHERE name = 'Lucian B';
-```{{exec}}
-
-You should see the hours and GPA information for Lucian B.
 If you want to see this info for all students, you can us the CQL `GROUP BY`.
 This will calculate hours and gpa for each student in the database.
+
+You will also use `mask_inner()` to mask all but the first three characters;
+
+**Note:** The data is not masked in the database. It is only masked in thr query.
 
 ✅ Get hours and gpa for all students.
 ```
 SELECT 
-  name AS student, 
+  mask_inner(name, 3, 0) AS student, 
   SUM(hours) AS hours,
   SUM(hours * grade)/SUM(hours) AS gpa
 FROM credits
