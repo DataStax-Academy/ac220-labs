@@ -46,7 +46,7 @@ sudo ln -sf /usr/local/bin/python3.11 /usr/bin/python3
 
 su - cassandra-user -c '
   cd ~
-  wget https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz
+  wget https://archive.apache.org/dist/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz
   tar -xzf apache-cassandra-5.0.4-bin.tar.gz
   rm apache-cassandra-5.0.4-bin.tar.gz
   mv apache-cassandra-5.0.4 nodeA
