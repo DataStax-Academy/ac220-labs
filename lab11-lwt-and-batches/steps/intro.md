@@ -4,4 +4,5 @@ In this hands-on lab, you will:
 - Use a batch to insert data
 - Use LWT to do an insert
 
-❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
+>⚠️ **Warning:**
+>Wait for the *Lab environment ready!* message before you click *START*.

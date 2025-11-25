@@ -5,4 +5,5 @@ In this hands-on lab, you will:
 - Populate the table and UDT
 - Alter the UDT schema
 
-❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
+>⚠️ **Warning:**
+>Wait for the *Lab environment ready!* message before you click *START*.

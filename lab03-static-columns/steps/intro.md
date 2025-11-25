@@ -5,4 +5,5 @@ In this hands-on lab, you will:
 - Create another table with a static column
 - Use `SSTableDump` to see how statis data is stored
 
-❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
+>⚠️ **Warning:**
+>Wait for the *Lab environment ready!* message before you click *START*.

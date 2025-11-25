@@ -5,4 +5,5 @@ In this hands-on lab, you will:
 - Add a frozen collection to the table
 - Use the frozen UDT in a query
 
-❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
+>⚠️ **Warning:**
+>Wait for the *Lab environment ready!* message before you click *START*.

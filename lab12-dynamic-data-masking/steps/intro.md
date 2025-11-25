@@ -5,4 +5,5 @@ In this hands-on lab, you will:
 - Use aggregates and arithmetic operators to return total hours and GPA
 - Use DDM to mask student names
 
-❗ <strong>Warning:</strong> Wait for the *Lab environment ready!* message before you click *START*
+>⚠️ **Warning:**
+>Wait for the *Lab environment ready!* message before you click *START*.
