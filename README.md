@@ -7,7 +7,7 @@ steps to contain, remediate and investigate the activity.
 We followed established incident-response processes to review and to revert any unauthorized activity.
 
 **Required Actions:** Collaborators who interacted with this repository between January 31, 2026, and February 3, 2026, 
-rebase your branch onto the new `main` / `master`. Do not merge `main` / `master` into your branch.
+rebase your branch onto the new `main` / `master`. **Do not merge `main` / `master` into your branch!**
 
 At DataStax, we remain committed to your security and to transparency within the open-source community.
 
