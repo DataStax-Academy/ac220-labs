@@ -1,4 +1,5 @@
-# ac220-labs
+### Dated: February 10, 2026
+
 This repository was temporarily offline following the confirmation of unauthorized activity within a limited number 
 of our public DataStax GitHub repositories, listed below. Working with our internal incident response team, we took 
 steps to contain, remediate and investigate the activity.
